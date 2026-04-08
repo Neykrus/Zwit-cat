@@ -2,812 +2,236 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Андрій Яковенко - Експерт ритейлу</title>
-    <meta name="description" content="Андрій Яковенко: Експерт ритейлу з досвідом управління, AI-оптимізації та зростання бізнесу.">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Vape Analytics: Фінальна версія</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
-        :root {
-            --primary: #000000;
-            --primary-dark: #333333;
-            --secondary: #666666;
-            --dark: #ffffff;
-            --light: #0a0a0a;
-            --gray: #888888;
-            --success: #444444;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --transition: all 0.3s ease;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header Styles */
-        header {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding: 80px 0;
-            background: linear-gradient(135deg, #f9f9f9 0%, #e8e8e8 100%);
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            width: 100%;
-        }
-        
-        .profile-image {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--primary);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-            margin: 0 auto 30px;
-            transition: var(--transition);
-        }
-        
-        .profile-image:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .title {
-            font-size: 1.8rem;
-            color: var(--secondary);
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        
-        .header-badges {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .badge {
-            background: var(--card-bg);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--light);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Section Styles */
-        section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 50px;
-            text-align: center;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--primary);
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 3px;
-        }
-        
-        /* About Section */
-        .about-content {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-            color: #333;
-        }
-        
-        /* Experience Section */
-        .timeline {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 10px;
-        }
-        
-        .timeline-item {
-            padding: 30px;
-            position: relative;
-            width: 50%;
-            background: var(--card-bg);
-            border-radius: 15px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            color: #333;
-        }
-        
-        .timeline-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .timeline-item:nth-child(odd) {
-            left: 0;
-            transform-origin: right center;
-        }
-        
-        .timeline-item:nth-child(even) {
-            left: 50%;
-            transform-origin: left center;
-        }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--primary);
-            border: 4px solid var(--dark);
-            border-radius: 50%;
-            top: 40px;
-            z-index: 1;
-        }
-        
-        .timeline-item:nth-child(odd)::after {
-            right: -10px;
-        }
-        
-        .timeline-item:nth-child(even)::after {
-            left: -10px;
-        }
-        
-        .job-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        
-        .company {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        
-        .job-date {
-            color: var(--gray);
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .job-description {
-            margin-top: 15px;
-        }
-        
-        .job-description li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 20px;
-            color: #444;
-        }
-        
-        .job-description li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-        }
-        
-        /* Skills Section */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .skill-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            text-align: center;
-            color: #333;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .skill-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-        
-        .skill-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        
-        .skill-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        
-        /* Contact Section */
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-        
-        .contact-card {
-            background: var(--primary);
-            border-radius: 15px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            transition: var(--transition);
-            color: white;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            background: var(--primary-dark);
-        }
-        
-        .contact-icon {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 20px;
-        }
-        
-        .contact-info {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: white;
-        }
-        
-        .contact-link {
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .contact-link:hover {
-            background: white;
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-        
-        /* Language Switch */
-        .lang-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            background: var(--card-bg);
-            border-radius: 30px;
-            padding: 5px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .lang-btn {
-            background: none;
-            border: none;
-            color: var(--light);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-        }
-        
-        .lang-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            background: rgba(0, 0, 0, 0.9);
-            margin-top: 80px;
-            color: white;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate {
-            animation: fadeIn 1s ease forwards;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 3rem;
-            }
-            
-            .title {
-                font-size: 1.5rem;
-            }
-            
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            
-            .timeline-item:nth-child(even) {
-                left: 0;
-            }
-            
-            .timeline-item:nth-child(odd)::after,
-            .timeline-item:nth-child(even)::after {
-                left: 21px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .header-badges {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .skills-container,
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Particle Background */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        /* Language-specific styles */
-        .lang-en {
-            display: none;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; color: #333; }
+        .container { max-width: 1850px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h1 { color: #1a73e8; text-align: center; }
+        #drop-zone { border: 3px dashed #1a73e8; padding: 30px; text-align: center; color: #1a73e8; cursor: pointer; border-radius: 8px; background: #f8fbff; margin-bottom: 20px; }
+        .btn-container { text-align: center; margin: 20px 0; display: flex; justify-content: center; gap: 15px; }
+        .btn { padding: 15px 30px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; color: white; transition: 0.3s; }
+        .btn-refresh { background: #28a745; }
+        .btn-excel { background: #107c41; display: none; }
+        table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 20px; }
+        th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
+        th { background: #f1f4f9; position: sticky; top: 0; cursor: pointer; user-select: none; }
+        th:hover { background: #e2e8f0; }
+        th.sort-asc::after { content: " ↑"; }
+        th.sort-desc::after { content: " ↓"; }
+        .total-row { background: #e8f0fe; font-weight: bold; font-size: 12px; }
+        .diff-up { color: #28a745; font-weight: bold; }
+        .diff-down { color: #dc3545; font-weight: bold; }
+        .delta-box { font-size: 10px; display: block; margin-top: 2px; }
+        .accordion-item { border: 1px solid #ddd; border-radius: 8px; margin-top: 15px; overflow: hidden; }
+        .accordion-header { background: #f8f9fa; padding: 12px 15px; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-content { display: none; padding: 15px; background: white; overflow-x: auto; }
+        .accordion-active .accordion-content { display: block; }
     </style>
 </head>
 <body>
-    <div class="lang-switch">
-        <button class="lang-btn active" onclick="switchLang('ua')">UA</button>
-        <button class="lang-btn" onclick="switchLang('en')">EN</button>
+
+<div class="container">
+    <h1>📈 Аналіз динаміки категорій</h1>
+    <div id="drop-zone">1. Завантажте файли звіту</div>
+    <input type="file" id="file-input" style="display: none" multiple>
+    
+    <div id="file-settings"></div>
+    <div class="btn-container">
+        <button id="update-btn" class="btn btn-refresh" style="display:none">2. Сформувати звіт</button>
+        <button id="excel-btn" class="btn btn-excel">📗 Завантажити в Excel</button>
     </div>
+    
+    <div id="comparison-output"></div>
+    <div id="detailed-reports"></div>
+</div>
 
-    <header>
-        <div id="particles-js"></div>
-        <div class="container">
-            <div class="header-content">
-                <img src="profile.jpg" alt="Андрій Яковенко" class="profile-image" onerror="this.src='https://static.work.ua/resumes_photo/5/3/9/4/5394735_middle.jpg'">
-                <h1 class="lang-ua">Андрій Яковенко</h1>
-                <h1 class="lang-en">Andrii Yakovenko</h1>
-                <p class="title lang-ua">Експерт ритейлу з фокусом на зростання та інновації</p>
-                <p class="title lang-en">Retail Expert Focused on Growth and Innovation</p>
-                
-                <div class="header-badges">
-                    <div class="badge"><i class="fas fa-chart-line"></i> <span class="lang-ua">KPI-орієнтований</span><span class="lang-en">80% Profit Growth</span></div>
-                    <div class="badge"><i class="fas fa-robot"></i> <span class="lang-ua">AI-оптимізація</span><span class="lang-en">AI Optimization</span></div>
-                    <div class="badge"><i class="fas fa-network-wired"></i> <span class="lang-ua">Управління мережами</span><span class="lang-en">Network Management</span></div>
-                </div>
-            </div>
-        </div>
-    </header>
+<script>
+const GROUPS = {
+    "Pod-системи": ["Elf Bar", "GeekVape", "Innokin", "Joyetech", "Lost Vape", "Ovns", "Oxva", "Upends Upox", "Smok", "Suorin", "Vaporesso", "Voopoo", "ZQ", "Eleaf", "Nevoks"],
+    "Компоненти (Набори)": ["Набір Elfliq", "Набір ChaserLab", "Набір FlavorLab", "Набір Octobar", "Набір Hype", "Набір Fluffy Puff", "Набір Aroma Max", "Набір Wick Wire", "Набір Dead Horse", "Набір Punch", "Набір Рефрост", "Набір Dr. Cloud", "Аромат бустер Uliq", "Набір Alchemist", "Набір Fluffy Puff Organic", "Набір In Bottle Puzzle", "Набір Nova", "Набір SteamPuff", "Набір Lucky", "Набір Vape Shot", "Набір Marvellous", "Набір Twisted", "Набір Flip", "Набір Phantom", "Набір Uliq", "Набір Dinner Lady", "Набір Mix Bar"],
+    "Снюс": ["Street", "Cuba", "Scooper", "Odens", "Siberia", "Velo", "Vika"],
+    "Напої": ["Напої"],
+    "Ароматизатори": ["Ароматизатори Alchemist", "1E8HT 60 ml", "Ароматизатори Yummy", "Ароматизатори Wick&Wire", "Ароматизатори InBottle", "Ароматизатори Hype", "Ароматизатори Lucky", "Ароматизатори Katana", "Ароматизатори Troublemaker", "Ароматизатор Flavorlab", "Ароматизотор ElfLiQ", "Ароматизатори Vape Shot", "Ароматизатор 420", "Ароматизатор Elix", "Ароматизатор Nectar", "Ароматизатор Creepy", "Ароматизатор Sqwiz", "Ароматизатор Chaser", "Ароматизатори Flip"],
+    "Одноразові Pod-системи": ["Одноразові Pod-системи"],
+    "Чайна Суміш": ["Чайна суміш", "Чайна суміш Zodiac", "Чайна суміш Molfar", "Чайна суміш Heven", "Чайна суміш Atom", "Чайна суміш Daim", "Чайна суміш 4:20", "Чайна суміш Cult", "Чайна суміш Yummy", "Чайна суміш Creepy", "Чайна суміш Unity", "Чайна суміш Pixtea", "Чайна Суміш Jibiar"],
+    "Запальнички": ["Запальнички"],
+    "CBD товари": ["CBD Candy", "CBD Bears", "Мікродозінг", "Напої CBD", "CBD - KreaTea", "Гумка CBD", "CBD товари"],
+    "Кальяни та комплектуючі": ["Вугілля", "Totem Hookah", "Кальяни", "Аксесуари", "Колби", "Кальяни та комплектуючі"],
+    "Комплектуючі": ["Картриджі Lost Vape", "Випарники Lost Vape", "Випарники Smok", "Випарники Vaporesso", "Випарники Voopoo", "Випарники ZQ", "Картриджі Elf Bar", "Картриджі Eleaf", "Картриджі Geek Vape", "Картриджі Oxva", "Картриджі Smok", "Картриджі Suorin", "Картриджі Vaporesso", "Картриджі Upends", "Катриджі Voopoo", "Картриджі ZQ", "Випарники Nevoks", "Картриджі Nevoks", "Картриджі OVNS", "Випарник Joyetech", "Випаровувач", "Комплектуючі", "Акумулятори", "Аккумулятор"],
+    "Акцизна група": ["Тютюн для кальяну", "Табачні стіки", "Акцизна група товарів"],
+    "Бонг Та Комплектуючі": ["Гріндер", "Фільтр Для Самокруток", "Папір Для Фільтрів", "Блант", "Бонг", "Джоінти", "Додаткова Комплектація", "Ковпак Для Пляшки", "Папір Для Самокруток", "Трубка", "Бонг Та Комплектуючі"],
+    "Мерч": ["Мерч"],
+    "Периферія": ["Периферія"],
+    "Спеціальні пропозиції": ["Спеціальні пропозиції"]
+};
 
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title lang-ua">Про мене</h2>
-            <h2 class="section-title lang-en">About Me</h2>
-            
-            <div class="about-content animate">
-                <p class="lang-ua">25-річний експерт з Полтави з 5-річним досвідом у ритейлі. Спеціалізуюся на управлінні мережами, оптимізації процесів та впровадженні AI. Збільшую виручку, будую сильні команди та забезпечую стабільне зростання. Відкритий до нових можливостей у продажах та управлінні.</p>
-                <p class="lang-en">25-year-old expert from Poltava with 7 years in retail. Specialize in network management, process optimization, and AI implementation. Increase revenue, build strong teams, and ensure stable growth. Open to new opportunities in sales and management.</p>
-                
-                <div class="skill-stats" style="margin-top: 30px;">
-                    <div class="stat">
-                        <div class="stat-number">5+</div>
-                        <div class="stat-label lang-ua">років досвіду</div>
-                        <div class="stat-label lang-en">years of experience</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label lang-ua">торгових точок</div>
-                        <div class="stat-label lang-en">trade points</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">15+</div>
-                        <div class="stat-label lang-ua">пряме управління ТТ</div>
-                        <div class="stat-label lang-en">direct TT management</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+let rawReports = [];
+let sortConfig = { key: 'r', direction: 'desc' };
 
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title lang-ua">Досвід роботи</h2>
-            <h2 class="section-title lang-en">Work Experience</h2>
-            
-            <div class="timeline">
-                <div class="timeline-item animate">
-                    <div class="job-title lang-ua">Менеджер з розвитку</div>
-                    <div class="job-title lang-en">Development Manager</div>
-                    <div class="company">S.V. Group</div>
-                    <div class="job-date"><i class="far fa-calendar-alt"></i> <span class="lang-ua">Квітень 2024 – Нині</span><span class="lang-en">January 2024 – Present</span></div>
-                    <ul class="job-description">
-                        <li class="lang-ua">Відповідаю за асортимент 150 торгових точок</li>
-                        <li class="lang-ua">+22% виручки за місяць</li>
-                        <li class="lang-ua">Оптимізував асортимент з AI</li>
-                        <li class="lang-ua">Пряме управління 15 торговими точками</li>
+function clean(v) {
+    if(!v) return 0;
+    let s = v.toString().replace(/\s/g, '').replace(/ /g, '').replace(/шт\.|грн/g, '').replace(',', '.');
+    return parseFloat(s) || 0;
+}
 
-                        <li class="lang-en">Responsible for assortment of 150 trade points</li> 
-                        <li class="lang-en">+22% revenue in a month</li>
-                        <li class="lang-en">Optimized assortment with AI</li>
-                        <li class="lang-en">Direct management of 15 trade points</li>
-                    </ul>
-                </div>
-                
-                <div class="timeline-item animate">
-                    <div class="job-title lang-ua">Регіональний адміністратор</div>
-                    <div class="job-title lang-en">Regional Administrator</div>
-                    <div class="company">UVape</div>
-                    <div class="job-date"><i class="far fa-calendar-alt"></i> <span class="lang-ua">Жовтень 2024 – Квітень 2025</span><span class="lang-en">October 2023 – December 2023</span></div>
-                    <ul class="job-description">
-                        <li class="lang-ua">Аудит ТТ, інвентаризації, аналіз ринку з AI</li>
-                        <li class="lang-ua">Подолав дефіцит кадрів, забезпечив ріст KPI</li>
-                        <li class="lang-ua">Робота з 1C, звітами та логістикою</li>
-                        <li class="lang-ua">Пошук та контроль підрядників</li>
-                        
+document.getElementById('drop-zone').onclick = () => document.getElementById('file-input').click();
+document.getElementById('file-input').onchange = (e) => {
+    rawReports = [];
+    document.getElementById('file-settings').innerHTML = "";
+    Array.from(e.target.files).forEach((file, idx) => {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            let data;
+            if (file.name.endsWith('.xlsx')) {
+                const wb = XLSX.read(new Uint8Array(ev.target.result), {type:'array'});
+                data = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {header:1});
+            } else {
+                data = Papa.parse(ev.target.result, {header:false}).data;
+            }
+            handleData(data, file.name, idx);
+        };
+        if (file.name.endsWith('.xlsx')) reader.readAsArrayBuffer(file);
+        else reader.readAsText(file);
+    });
+};
 
-                        <li class="lang-en">TT audits, inventories, AI market analysis</li>
-                        <li class="lang-en">Overcame staff shortages, ensured KPI growth</li>
-                        <li class="lang-en">Work with 1C, reports, and logistics</li>
-                        <li class="lang-en">Contractor search and management</li>
-
-                    </ul>
-                </div>
-                
-                <div class="timeline-item animate">
-                    <div class="job-title lang-ua">Керуючий магазином</div>
-                    <div class="job-title lang-en">Store Manager</div>
-                    <div class="company">Vape Station</div>
-                    <div class="job-date"><i class="far fa-calendar-alt"></i> <span class="lang-ua">Квітень 2023 – Жовтень 2024</span><span class="lang-en">April 2023 – September 2023</span></div>
-                    <ul class="job-description">
-                        <li class="lang-ua">Збільшив прибуток на 80% за рік</li>
-                        <li class="lang-ua">Розробив регламенти та SMM-контент</li>
-                        
-                        <li class="lang-en">Increased profit by 80% in a year</li>
-                        <li class="lang-en">Developed regulations and SMM content</li>
-                    </ul>
-                </div>
-                
-                <div class="timeline-item animate">
-                    <div class="job-title lang-ua">Заступник директора</div>
-                    <div class="job-title lang-en">Deputy Director</div>
-                    <div class="company">Moyo</div>
-                    <div class="job-date"><i class="far fa-calendar-alt"></i> <span class="lang-ua">Квітень 2019 – Березень 2020</span><span class="lang-en">April 2019 – March 2020</span></div>
-                    <ul class="job-description">
-                        <li class="lang-ua">Найкращі продажі та NPS</li>
-                        <li class="lang-ua">Керував командою</li>
-                        
-                        <li class="lang-en">Top sales and NPS</li>
-                        <li class="lang-en">Managed team</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title lang-ua">Навички та досягнення</h2>
-            <h2 class="section-title lang-en">Skills & Achievements</h2>
-            
-            <div class="skills-container">
-                <div class="skill-card animate">
-                    <div class="skill-icon"><i class="fas fa-chart-pie"></i></div>
-                    <h3 class="skill-title lang-ua">Аналітика даних</h3>
-                    <h3 class="skill-title lang-en">Data Analytics</h3>
-                    <p class="lang-ua">Аналіз ринкових тенденцій, робота з BI-системами, прогнозування продажів</p>
-                    <p class="lang-en">Market trend analysis, work with BI systems, sales forecasting</p>
-                </div>
-                
-                <div class="skill-card animate">
-                    <div class="skill-icon"><i class="fas fa-robot"></i></div>
-                    <h3 class="skill-title lang-ua">AI-оптимізація</h3>
-                    <h3 class="skill-title lang-en">AI Optimization</h3>
-                    <p class="lang-ua">Впровадження штучного інтелекту для автоматизації та покращення ефективності</p>
-                    <p class="lang-en">Implementation of artificial intelligence for automation and efficiency improvement</p>
-                </div>
-                
-                <div class="skill-card animate">
-                    <div class="skill-icon"><i class="fas fa-users"></i></div>
-                    <h3 class="skill-title lang-ua">Управління командою</h3>
-                    <h3 class="skill-title lang-en">Team Management</h3>
-                    <p class="lang-ua">Побудова та мотивація команд, навчання персоналу, розвиток лідерських якостей</p>
-                    <p class="lang-en">Building and motivating teams, staff training, leadership development</p>
-                </div>
-                
-                <div class="skill-card animate">
-                    <div class="skill-icon"><i class="fas fa-store"></i></div>
-                    <h3 class="skill-title lang-ua">Розвиток мереж</h3>
-                    <h3 class="skill-title lang-en">Network Development</h3>
-                    <p class="lang-ua">Стратегічне планування, масштабування бізнесу, відкриття нових точок</p>
-                    <p class="lang-en">Strategic planning, business scaling, opening new locations</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="education">
-        <div class="container">
-            <h2 class="section-title lang-ua">Освіта</h2>
-            <h2 class="section-title lang-en">Education</h2>
-            
-            <div class="about-content animate">
-                <div class="job-title lang-ua">ПолтНТУ імені Юрія Кондратюка</div>
-                <div class="job-title lang-en">PoltNTU named after Yuri Kondratyuk</div>
-                <div class="company lang-ua">Фінанси (2018–2020)</div>
-                <div class="company lang-en">Finance (2018–2020)</div>
-                
-                <div style="margin-top: 20px;">
-                    <div class="job-title lang-ua">Коледж ПДАА</div>
-                    <div class="job-title lang-en">PDAA College</div>
-                    <div class="company lang-ua">Оціночна діяльність (2015–2018)</div>
-                    <div class="company lang-en">Valuation (2015–2018)</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title lang-ua">Контакти</h2>
-            <h2 class="section-title lang-en">Contacts</h2>
-            
-            <div class="contact-container">
-                <div class="contact-card animate">
-                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
-                    <h3 class="lang-ua">Телефон</h3>
-                    <h3 class="lang-en">Phone</h3>
-                    <p class="contact-info">+38 099 358-66-21</p>
-                    <a href="tel:+380993586621" class="contact-link lang-ua">Зателефонувати</a>
-                    <a href="tel:+380993586621" class="contact-link lang-en">Call now</a>
-                </div>
-                
-                <div class="contact-card animate">
-                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                    <h3 class="lang-ua">Email</h3>
-                    <h3 class="lang-en">Email</h3>
-                    <p class="contact-info">neykrus@gmail.com</p>
-                    <a href="mailto:neykrus@gmail.com" class="contact-link lang-ua">Написати</a>
-                    <a href="mailto:neykrus@gmail.com" class="contact-link lang-en">Send email</a>
-                </div>
-                
-                <div class="contact-card animate">
-                    <div class="contact-icon"><i class="fas fa-globe"></i></div>
-                    <h3 class="lang-ua">Онлайн-резюме</h3>
-                    <h3 class="lang-en">Online Resume</h3>
-                    <p class="contact-info">Work.ua</p>
-                    <a href="https://www.work.ua/resumes/5394735/" target="_blank" class="contact-link lang-ua">Переглянути</a>
-                    <a href="https://www.work.ua/resumes/5394735/" target="_blank" class="contact-link lang-en">View</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p class="lang-ua">© 2025 Андрій Яковенко. Всі права захищені.</p>
-            <p class="lang-en">© 2025 Andrii Yakovenko. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // Initialize particles.js
-        document.addEventListener('DOMContentLoaded', function() {
-            particlesJS('particles-js', {
-                particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: "#000000" },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.3, random: true },
-                    size: { value: 3, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#000000",
-                        opacity: 0.2,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "repulse" },
-                        onclick: { enable: true, mode: "push" },
-                        resize: true
-                    }
-                },
-                retina_detect: true
-            });
-            
-            // Initialize language to Ukrainian
-            switchLang('ua');
-            
-            // Add scroll animations
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate');
-                    }
-                });
-            }, observerOptions);
-            
-            document.querySelectorAll('section .animate').forEach(section => {
-                observer.observe(section);
-            });
-        });
-        
-        function switchLang(lang) {
-            // Hide all language-specific elements
-            document.querySelectorAll('[class^="lang-"]').forEach(el => {
-                el.style.display = 'none';
-            });
-            
-            // Show elements for selected language
-            document.querySelectorAll('.lang-' + lang).forEach(el => {
-                el.style.display = 'block';
-            });
-            
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[onclick="switchLang('${lang}')"]`).classList.add('active');
-            
-            // Update document language attribute
-            document.documentElement.lang = lang;
+function handleData(rows, fileName, id) {
+    let res = { id, fileName, date: "", data: {}, totalR: 0, totalP: 0, totalCost: 0, totalQ: 0 };
+    const norm = {}; for (let g in GROUPS) norm[g] = GROUPS[g].map(i => i.toLowerCase().trim());
+    
+    rows.forEach((row, i) => {
+        if (i > 0 && row[1] && row[1] !== "Категорії") {
+            res.totalR += clean(row[5]); res.totalP += clean(row[6]); res.totalCost += clean(row[3]); res.totalQ += clean(row[2]);
         }
-    </script>
+    });
+
+    let usedIndices = new Set();
+    for (let g in norm) {
+        let q=0, r=0, p=0, c=0;
+        rows.forEach((row, i) => {
+            if (i > 0 && norm[g].includes((row[1]||"").toString().toLowerCase().trim())) {
+                q += clean(row[2]); c += clean(row[3]); r += clean(row[5]); p += clean(row[6]);
+                usedIndices.add(i);
+            }
+        });
+        res.data[g] = { q, c, r, p, m: (r?p/r*100:0), rs: (res.totalR?r/res.totalR*100:0), ps: (res.totalP?p/res.totalP*100:0) };
+    }
+
+    let oR=0, oP=0, oQ=0, oC=0;
+    rows.forEach((row, i) => {
+        if (i > 0 && !usedIndices.has(i) && row[1] && row[1] !== "Категорії") {
+            oR += clean(row[5]); oP += clean(row[6]); oQ += clean(row[2]); oC += clean(row[3]);
+        }
+    });
+    res.data["Інші товари"] = { q: oQ, c: oC, r: oR, p: oP, m: (oR?oP/oR*100:0), rs: (res.totalR?oR/res.totalR*100:0), ps: (res.totalP?oP/res.totalP*100:0) };
+
+    rawReports.push(res);
+    renderFileRow(res);
+    if (rawReports.length >= 2) document.getElementById('update-btn').style.display = "block";
+}
+
+function renderFileRow(r) {
+    let div = document.createElement('div');
+    div.innerHTML = `<div style="padding:10px; border:1px solid #ddd; margin-bottom:5px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; background:white;">
+        <span>📄 ${r.fileName}</span>
+        <input type="month" onchange="updateDate(${r.id}, this.value)" style="padding:8px;">
+    </div>`;
+    document.getElementById('file-settings').appendChild(div);
+}
+
+function updateDate(id, date) { rawReports.find(x => x.id === id).date = date; }
+
+document.getElementById('update-btn').onclick = function() {
+    if (rawReports.some(r => !r.date)) { alert("Оберіть дату!"); return; }
+    generateReport();
+    document.getElementById('excel-btn').style.display = "block";
+};
+
+function generateReport() {
+    let sortedFiles = [...rawReports].sort((a, b) => new Date(a.date) - new Date(b.date));
+    renderComparison(sortedFiles[0], sortedFiles[1]);
+    renderDetails(sortedFiles);
+}
+
+function setSort(key) {
+    if (sortConfig.key === key) sortConfig.direction = sortConfig.direction === 'desc' ? 'asc' : 'desc';
+    else { sortConfig.key = key; sortConfig.direction = 'desc'; }
+    generateReport();
+}
+
+function getDeltaFormatted(v2, v1, isPercent = false) {
+    let diff = v2 - v1;
+    let cls = diff >= 0 ? 'diff-up' : 'diff-down';
+    let sign = diff >= 0 ? '+' : '';
+    let percentChange = (v1 !== 0 && !isPercent) ? ` (${sign}${((v2/v1-1)*100).toFixed(1)}%)` : '';
+    return `<span class="delta-box ${cls}">${sign}${diff.toLocaleString()}${isPercent?'%':''}${percentChange}</span>`;
+}
+
+function renderComparison(p, c) {
+    let html = `<div style="background:#28a745; color:white; padding:15px; border-radius:8px; margin-top:20px; font-weight:bold; text-align:center;">📊 ПОРІВНЯННЯ ТА ДИНАМІКА: ${c.date} vs ${p.date}</div>`;
+    const getSortClass = (key) => sortConfig.key === key ? `class="sort-${sortConfig.direction}"` : '';
+    html += `<table><thead><tr><th onclick="setSort('name')" ${getSortClass('name')}>Група</th><th onclick="setSort('r')" ${getSortClass('r')}>Виторг (грн)</th><th onclick="setSort('p')" ${getSortClass('p')}>Прибуток (грн)</th><th onclick="setSort('m')" ${getSortClass('m')}>Маржа %</th><th onclick="setSort('rs')" ${getSortClass('rs')}>Доля Вит. %</th><th onclick="setSort('ps')" ${getSortClass('ps')}>Доля Приб. %</th></tr></thead><tbody>`;
+    
+    let tableData = [...Object.keys(GROUPS), "Інші товари"].map(g => ({ name: g, cur: c.data[g] || {r:0, rs:0, p:0, m:0, ps:0}, prev: p.data[g] || {r:0, rs:0, p:0, m:0, ps:0} }));
+    tableData.sort((a, b) => {
+        let valA = sortConfig.key === 'name' ? a.name : a.cur[sortConfig.key];
+        let valB = sortConfig.key === 'name' ? b.name : b.cur[sortConfig.key];
+        return sortConfig.direction === 'asc' ? (valA > valB ? 1 : -1) : (valA < valB ? 1 : -1);
+    });
+
+    tableData.forEach(row => {
+        html += `<tr><td><b>${row.name}</b></td><td>${row.cur.r.toLocaleString()}<br>${getDeltaFormatted(row.cur.r, row.prev.r)}</td><td>${row.cur.p.toLocaleString()}<br>${getDeltaFormatted(row.cur.p, row.prev.p)}</td><td>${row.cur.m.toFixed(2)}%<br>${getDeltaFormatted(row.cur.m, row.prev.m, true)}</td><td>${row.cur.rs.toFixed(2)}%<br>${getDeltaFormatted(row.cur.rs, row.prev.rs, true)}</td><td>${row.cur.ps.toFixed(2)}%<br>${getDeltaFormatted(row.cur.ps, row.prev.ps, true)}</td></tr>`;
+    });
+    
+    html += `</tbody><tfoot><tr class="total-row"><td>РАЗОМ</td><td>${c.totalR.toLocaleString()}<br>${getDeltaFormatted(c.totalR, p.totalR)}</td><td>${c.totalP.toLocaleString()}<br>${getDeltaFormatted(c.totalP, p.totalP)}</td><td>${(c.totalP/c.totalR*100).toFixed(2)}%</td><td>100.00%</td><td>100.00%</td></tr></tfoot></table>`;
+    document.getElementById('comparison-output').innerHTML = html;
+}
+
+function renderDetails(sorted) {
+    let cont = document.getElementById('detailed-reports');
+    cont.innerHTML = "<h3 style='margin-top:30px'>📂 Деталізація по періодах</h3>";
+    sorted.forEach(report => {
+        let item = document.createElement('div');
+        item.className = "accordion-item";
+        item.innerHTML = `<div class="accordion-header" onclick="this.parentElement.classList.toggle('accordion-active')"><span>📅 Дані за ${report.date}</span><span>🔽</span></div>
+        <div class="accordion-content">
+            <table><tr><th>Група</th><th>Виторг</th><th>Прибуток</th><th>Доля Вит. %</th><th>Доля Приб. %</th></tr>
+            ${Object.keys(report.data).map(g => `<tr><td>${g}</td><td>${report.data[g].r.toLocaleString()}</td><td>${report.data[g].p.toLocaleString()}</td><td>${report.data[g].rs.toFixed(2)}%</td><td>${report.data[g].ps.toFixed(2)}%</td></tr>`).join('')}
+            </table>
+        </div>`;
+        cont.appendChild(item);
+    });
+}
+
+document.getElementById('excel-btn').onclick = async function() {
+    let sorted = [...rawReports].sort((a, b) => new Date(a.date) - new Date(b.date));
+    let p = sorted[0], c = sorted[1];
+    const wb = new ExcelJS.Workbook();
+    const ws = wb.addWorksheet('Динаміка');
+    ws.addRow(["", p.date, "", "", "", "", "", "", c.date, "", "", "", "", "", "", "Динаміка"]);
+    ws.mergeCells(1, 2, 1, 8); ws.mergeCells(1, 9, 1, 15); ws.mergeCells(1, 16, 1, 22);
+    ws.addRow(["Категорії", "К-сть", "Собівартість", "Виторг", "Прибуток", "Маржа", "Доля в виторгу", "Доля в прибутку", "К-сть", "Собівартість", "Виторг", "Прибуток", "Маржа", "Доля в виторгу", "Доля в прибутку", "К-сть", "Собівартість", "Виторг", "Прибуток", "Маржа", "Доля в виторгу", "Доля в прибутку"]);
+    
+    [...Object.keys(GROUPS), "Інші товари"].forEach(g => {
+        let d1 = p.data[g] || {q:0, c:0, r:0, p:0, m:0, rs:0, ps:0}, d2 = c.data[g] || {q:0, c:0, r:0, p:0, m:0, rs:0, ps:0};
+        const cp = (v2, v1) => v1 ? (v2/v1-1) : 0;
+        let rowData = [g, d1.q, d1.c, d1.r, d1.p, d1.m/100, d1.rs/100, d1.ps/100, d2.q, d2.c, d2.r, d2.p, d2.m/100, d2.rs/100, d2.ps/100, cp(d2.q, d1.q), cp(d2.c, d1.c), cp(d2.r, d1.r), cp(d2.p, d1.p), (d2.m-d1.m)/100, (d2.rs-d1.rs)/100, (d2.ps-d1.ps)/100];
+        let nr = ws.addRow(rowData);
+        for(let i=16; i<=22; i++) {
+            let cl = nr.getCell(i); cl.numFmt = '0.00%';
+            if(rowData[i-1] > 0.0001) { cl.fill = {type:'pattern', pattern:'solid', fgColor:{argb:'FFC6EFCE'}}; cl.font = {color:{argb:'FF006100'}}; }
+            else if(rowData[i-1] < -0.0001) { cl.fill = {type:'pattern', pattern:'solid', fgColor:{argb:'FFFFC7CE'}}; cl.font = {color:{argb:'FF9C0006'}}; }
+        }
+        [6,7,8,13,14,15].forEach(i => nr.getCell(i).numFmt = '0.00%');
+    });
+    ws.columns.forEach(col => col.width = 17);
+    const buf = await wb.xlsx.writeBuffer();
+    saveAs(new Blob([buf]), `Analytics_${c.date}.xlsx`);
+};
+</script>
 </body>
 </html>
