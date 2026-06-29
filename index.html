@@ -23,7 +23,6 @@
         th:hover { background: #f1f5f9; }
         .total-row { background: #f0fdf4; font-weight: 700; color: #166534; font-size: 14px; }
         
-        /* ВИПРАВЛЕНІ КОЛЬОРИ ДИНАМІКИ */
         .delta-box { font-size: 11px; display: block; margin-top: 4px; }
         .diff-up { color: #10b981 !important; font-weight: bold; } 
         .diff-down { color: #ef4444 !important; font-weight: bold; }
@@ -61,7 +60,7 @@
 <script>
 const GROUPS = {
     "Pod-системи": ["Elf Bar", "GeekVape", "Innokin", "Joyetech", "Lost Vape", "Ovns", "Oxva", "Upends Upox", "Smok", "Suorin", "Vaporesso", "Voopoo", "ZQ", "Eleaf", "Nevoks"],
-    "Компоненти (Набори)": ["Набір Elfliq", "Набір ChaserLab", "Набір FlavorLab", "Набір Octobar", "Набір Hype", "Набір Fluffy Puff", "Набір Aroma Max", "Набір Wick Wire", "Набір Dead Horse", "Набір Punch", "Набір Рефрост", "Набір Dr. Cloud", "Аромат бустер Uliq", "Набір Alchemist", "Набір Fluffy Puff Organic", "Набір In Bottle Puzzle", "Набір Nova", "Набір SteamPuff", "Набір Lucky", "Набір Vape Shot", "Набір Marvellous", "Набір Twisted", "Набір Flip", "Набір Phantom", "Набір Uliq", "Набір Dinner Lady", "Набір Mix Bar"],
+    "Компоненти (Набори)": ["Набір Elfliq", "Набір ChaserLab", "Набір FlavorLab", "Набір Octobar", "Набір Hype", "Набір Fluffy Puff", "Набір Aroma Max", "Набір Wick Wire", "Набір Dead Horse", "Набір Punch", "Набір Рефрост", "Набір Dr. Cloud", "Аромат бустер Uliq", "Набір Alchemist", "Набір Fluffy Puff Organic", "Набір In Bottle Puzzle", "Набір Nova", "Набір SteamPuff", "Набір Lucky", "Набір Vape Shot", "Набір Marvellous", "Набір Twisted", "Набір Flip", "Набір Phantom", "Набір Uliq", "Набір Dinner Lady", "Набір Mix Bar", "Набір Blizz", "Набір Flick"],
     "Снюс": ["Street", "Cuba", "Scooper", "Odens", "Siberia", "Velo", "Vika"],
     "Напої": ["Напої"],
     "Ароматизатори": ["Ароматизатори Alchemist", "1E8HT 60 ml", "Ароматизатори Yummy", "Ароматизатори Wick&Wire", "Ароматизатори InBottle", "Ароматизатори Hype", "Ароматизатори Lucky", "Ароматизатори Katana", "Ароматизатори Troublemaker", "Ароматизатор Flavorlab", "Ароматизотор ElfLiQ", "Ароматизатори Vape Shot", "Ароматизатор 420", "Ароматизатор Elix", "Ароматизатор Nectar", "Ароматизатор Creepy", "Ароматизатор Sqwiz", "Ароматизатор Chaser", "Ароматизатори Flip"],
@@ -70,7 +69,7 @@ const GROUPS = {
     "Запальнички": ["Запальнички"],
     "CBD товари": ["CBD Candy", "CBD Bears", "Мікродозінг", "Напої CBD", "CBD - KreaTea", "Гумка CBD", "CBD товари"],
     "Кальяни та комплектуючі": ["Вугілля", "Totem Hookah", "Кальяни", "Аксесуари", "Колби", "Кальяни та комплектуючі"],
-    "Комплектуючі": ["Картриджі Lost Vape", "Випарники Lost Vape", "Випарники Smok", "Випарники Vaporesso", "Випарники Voopoo", "Випарники ZQ", "Картриджі Elf Bar", "Картриджі Eleaf", "Картриджі Geek Vape", "Картриджі Oxva", "Картриджі Smok", "Картриджі Suorin", "Картриджі Vaporesso", "Картриджі Upends", "Катриджі Voopoo", "Картриджі ZQ", "Випарники Nevoks", "Картриджі Nevoks", "Картриджі OVNS", "Випарник Joyetech", "Випаровувач", "Комплектуючі", "Акумулятори", "Аккумулятор"],
+    "Комплектуючі": ["Картриджі Lost Vape", "Випарники Lost Vape", "Випарники Smok", "Випарники Vaporesso", "Випарники Voopoo", "Випарники ZQ", "Картриджі Elf Bar", "Картриджі Eleaf", "Картриджі Geek Vape", "Картриджі Oxva", "Картриджі Smok", "Картриджі Suorin", "Картриджі Vaporesso", "Картриджі Upends", "Катриджі Voopoo", "Картриджі ZQ", "Випарники Nevoks", "Картриджі Nevoks", "Картриджі OVNS", "Випарник Joyetech", "Випаровувач", "Комплектуючі", "Акумулятори", "Аккумулятор", "Картриджі RXELF"],
     "Акцизна група": ["Тютюн для кальяну", "Табачні стіки", "Акцизна група товарів"],
     "Бонг Та Комплектуючі": ["Гріндер", "Фільтр Для Самокруток", "Папір Для Фільтрів", "Блант", "Бонг", "Джоінти", "Додаткова Комплектація", "Ковпак Для Пляшки", "Папір Для Самокруток", "Трубка", "Бонг Та Комплектуючі"],
     "Мерч": ["Мерч"],
