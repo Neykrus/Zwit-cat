@@ -2,85 +2,88 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Vape Analytics: Unified CRM</title>
+    <title>Vape Analytics: Fixed Revenue</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f4f6f9; padding: 20px; color: #1e293b; }
-        .container { max-width: 1600px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        h1 { color: #1e3a8a; text-align: center; }
-        .crm-selector { text-align: center; margin: 15px; padding: 10px; background: #eef2ff; border-radius: 8px; }
-        #drop-zone { border: 2px dashed #3b82f6; padding: 30px; text-align: center; color: #2563eb; cursor: pointer; border-radius: 8px; background: #eff6ff; font-weight: 600; }
-        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; color: white; font-weight: 600; }
-        .btn-refresh { background: #10b981; } .btn-excel { background: #1d4ed8; display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
-        th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
-        .diff-up { color: #10b981 !important; font-weight: bold; } 
-        .diff-down { color: #ef4444 !important; font-weight: bold; }
-        .group-row { cursor: pointer; background: #f8fafc; }
-        .group-row:hover { background: #f1f5f9; }
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 25px; border-radius: 12px; }
+        .btn { padding: 12px 24px; cursor: pointer; border: none; border-radius: 6px; color: white; background: #10b981; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+        th, td { padding: 10px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h1>📊 Vape Analytics: Під Шоп / Шакал</h1>
-    <div class="crm-selector">
-        <label><input type="radio" name="crm" value="podshop" checked> Під Шоп</label>
-        <label style="margin-left:30px;"><input type="radio" name="crm" value="shakal"> Шакал</label>
-    </div>
-    <div id="drop-zone">📁 Завантажте файли звіту</div>
-    <input type="file" id="file-input" style="display: none" multiple>
-    <div id="file-settings" style="margin: 15px 0;"></div>
-    <div style="text-align: center; gap: 10px; display: flex; justify-content: center;">
-        <button id="update-btn" class="btn btn-refresh" style="display:none">📊 Сформувати звіт</button>
-        <button id="excel-btn" class="btn btn-excel">📗 Експорт в Excel</button>
-    </div>
-    <div id="comparison-output"></div>
-    <div id="detailed-reports"></div>
+    <h1>Фінальний аналізатор</h1>
+    <input type="file" id="file-input" multiple>
+    <button id="calc-btn" class="btn">Розрахувати виторг</button>
+    <div id="output"></div>
 </div>
 
 <script>
 const GROUPS = {
-    "Pod-системи": ["Elf Bar", "GeekVape", "Innokin", "Joyetech", "Lost Vape", "Ovns", "Oxva", "Upends", "Smok", "Suorin", "Vaporesso", "Voopoo", "ZQ", "Eleaf", "Nevoks", "Xros", "Xlim", "Argus", "Sonder", "Vinci", "Playstation"],
-    "Компоненти (Набори)": ["Набір", "Elfliq", "Chaser", "FlavorLab", "Octobar", "Hype", "Fluffy", "Aroma", "Wick", "Dead Horse", "Punch", "Рефрост", "Dr. Cloud", "Alchemist", "Puzzle", "Nova", "SteamPuff", "Lucky", "Vape Shot", "Marvellous", "Twisted", "Flip", "Phantom", "Blizz", "Flick", "Puff"],
-    "Снюс": ["Street", "Cuba", "Scooper", "Odens", "Siberia", "Velo", "Vika"],
-    "Ароматизатори": ["Ароматизатори", "Ароматизатор", "Elfliq", "1E8HT", "Yummy", "Wick&Wire", "InBottle", "Katana", "Troublemaker", "420", "Elix", "Nectar", "Creepy", "Sqwiz", "Chaser", "Flip", "Twister", "3Ger", "My Pods"],
-    "Чайна Суміш": ["Чайна", "Zodiac", "Molfar", "Heven", "Atom", "Daim", "4:20", "Cult", "Unity", "Pixtea", "Jibiar", "Geodenist", "Kratom"],
-    "Комплектуючі": ["Картридж", "Випарник", "RXELF", "Комплектуючі", "Акумулятор"],
-    "Інше (Мерч/Запальнички)": ["Мерч", "Периферія", "Запальнички", "Сертифікат", "Всячина", "Уценка", "Heel", "Мультітранс", "Чай в пірамідках", "Льодяники", "Гумка"]
+    "Pod-системи": ["OXVA", "XLIM", "Elf Bar", "GeekVape", "Sonder", "LostVape", "SMOK", "Vaporesso", "Xros", "VooPoo", "Argus", "VINCI", "ZQ"],
+    "Компоненти (Набори)": ["Набір", "Elfliq", "Chaser", "Octobar", "Punch", "Mix Bar", "FlavorLab", "Lucky", "Hype", "Phantom", "Blizz", "Alchemist"],
+    "Ароматизатори": ["Аромат", "Wick&Wire", "InBottle", "420", "Chaser", "My Pods"],
+    "Комплектуючі": ["Картридж", "Випарник", "RXELF"]
 };
 
-let rawReports = [];
+// Функция очистки строго для колонки 5 (Виторг) и 6 (Прибуток)
+function clean(v) {
+    if (!v) return 0;
+    let s = v.toString().replace(/[^\d,.]/g, '').replace(',', '.');
+    return parseFloat(s) || 0;
+}
 
-// Основна логіка обробки (аналогічна попереднім крокам)
-document.getElementById('drop-zone').onclick = () => document.getElementById('file-input').click();
-document.getElementById('file-input').onchange = (e) => {
-    let crm = document.querySelector('input[name="crm"]:checked').value;
-    Array.from(e.target.files).forEach((file, idx) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-            let data = file.name.endsWith('.xlsx') ? XLSX.utils.sheet_to_json(XLSX.read(new Uint8Array(ev.target.result), {type:'array'}).Sheets[0], {header:1}) : Papa.parse(ev.target.result, {header:false}).data;
-            handleData(data, file.name, idx, crm);
+document.getElementById('calc-btn').onclick = () => {
+    let files = document.getElementById('file-input').files;
+    let totals = {};
+
+    Array.from(files).forEach(file => {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            let data = Papa.parse(e.target.result, {header:false}).data;
+            
+            data.forEach((row, idx) => {
+                // Игнорируем заголовок и пустые строки
+                if (idx < 2 || !row[1]) return;
+
+                let itemName = row[1].toString();
+                let revenue = clean(row[5]); // 5-й индекс - это Виторг (по вашему CSV)
+                let profit = clean(row[6]);  // 6-й индекс - Прибуток
+
+                let found = false;
+                for (let group in GROUPS) {
+                    if (GROUPS[group].some(k => itemName.includes(k))) {
+                        if (!totals[group]) totals[group] = {r:0, p:0};
+                        totals[group].r += revenue;
+                        totals[group].p += profit;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    if (!totals["Інші"]) totals["Інші"] = {r:0, p:0};
+                    totals["Інші"].r += revenue;
+                    totals["Інші"].p += profit;
+                }
+            });
+            render(totals);
         };
-        file.name.endsWith('.xlsx') ? reader.readAsArrayBuffer(file) : reader.readAsText(file);
+        reader.readAsText(file);
     });
 };
 
-function handleData(rows, fileName, id, crm) {
-    let res = { id, fileName, crm, date: "", data: {} };
-    // Логіка групування та розрахунку (як відпрацьовано раніше)
-    // ... додайте сюди логіку рендеру з попередніх етапів ...
-    rawReports.push(res);
-    document.getElementById('update-btn').style.display = "block";
-    let div = document.createElement('div');
-    div.innerHTML = `📄 ${fileName} (${crm}) <input type="month" onchange="rawReports.find(x=>x.id===${id}).date=this.value">`;
-    document.getElementById('file-settings').appendChild(div);
+function render(totals) {
+    let html = "<table><tr><th>Група</th><th>Виторг</th><th>Прибуток</th></tr>";
+    for(let g in totals) {
+        html += `<tr><td>${g}</td><td>${totals[g].r.toFixed(2)}</td><td>${totals[g].p.toFixed(2)}</td></tr>`;
+    }
+    document.getElementById('output').innerHTML = html + "</table>";
 }
-
-// Кнопка Excel вже налаштована з виправленими formulae (як в останньому робочому варіанті)
 </script>
 </body>
 </html>
