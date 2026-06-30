@@ -59,17 +59,17 @@
 
 <script>
 const GROUPS = {
-    "Pod-системи": ["Elf Bar", "GeekVape", "Innokin", "Joyetech", "Lost Vape", "Ovns", "Oxva", "Upends Upox", "Smok", "Suorin", "Vaporesso", "Voopoo", "ZQ", "Eleaf", "Nevoks"],
-    "Компоненти (Набори)": ["Набір Elfliq", "Набір ChaserLab", "Набір FlavorLab", "Набір Octobar", "Набір Hype", "Набір Fluffy Puff", "Набір Aroma Max", "Набір Wick Wire", "Набір Dead Horse", "Набір Punch", "Набір Рефрост", "Набір Dr. Cloud", "Аромат бустер Uliq", "Набір Alchemist", "Набір Fluffy Puff Organic", "Набір In Bottle Puzzle", "Набір Nova", "Набір SteamPuff", "Набір Lucky", "Набір Vape Shot", "Набір Marvellous", "Набір Twisted", "Набір Flip", "Набір Phantom", "Набір Uliq", "Набір Dinner Lady", "Набір Mix Bar", "Набір Blizz", "Набір Flick"],
+    "Pod-системи": ["Elf Bar", "GeekVape", "Innokin", "Joyetech", "Lost Vape", "Ovns", "Oxva", "Upends Upox", "Smok", "Suorin", "Vaporesso", "Voopoo", "ZQ", "Eleaf", "Nevoks", "Xros", "Xlim", "Argus", "Sonder", "Vinci"],
+    "Компоненти (Набори)": ["Набір Elfliq", "Elfliq", "Гліцерин", "Набір Chaser", "Набір ChaserLab", "Набір FlavorLab", "Набір Octobar", "Набір Hype", "Набір Fluffy Puff", "Набір Aroma Max", "Набір Wick Wire", "Набір Dead Horse", "Набір Punch", "Набір Рефрост", "Набір Dr. Cloud", "Аромат бустер Uliq", "Набір Alchemist", "Набір Fluffy Puff Organic", "Набір In Bottle Puzzle", "Набір Puzzle", "Набір Nova", "Набір SteamPuff", "Набір Lucky", "Набір Vape Shot", "Набір Marvellous", "Набір Twisted", "Набір Flip", "Набір Phantom", "Набір Uliq", "Набір Dinner Lady", "Набір Mix Bar", "Набір Blizz", "Набір Flick", "Набір Infinity"],
     "Снюс": ["Street", "Cuba", "Scooper", "Odens", "Siberia", "Velo", "Vika"],
     "Напої": ["Напої"],
-    "Ароматизатори": ["Ароматизатори Alchemist", "1E8HT 60 ml", "Ароматизатори Yummy", "Ароматизатори Wick&Wire", "Ароматизатори InBottle", "Ароматизатори Hype", "Ароматизатори Lucky", "Ароматизатори Katana", "Ароматизатори Troublemaker", "Ароматизатор Flavorlab", "Ароматизотор ElfLiQ", "Ароматизатори Vape Shot", "Ароматизатор 420", "Ароматизатор Elix", "Ароматизатор Nectar", "Ароматизатор Creepy", "Ароматизатор Sqwiz", "Ароматизатор Chaser", "Ароматизатори Flip"],
+    "Ароматизатори": ["Ароматизатори Alchemist", "1E8HT 60 ml", "Ароматизатори Yummy", "Ароматизатори Wick&Wire", "Ароматизатор Wick&Wire", "Ароматизатори InBottle", "Ароматизатори Hype", "Ароматизатори Lucky", "Ароматизатори Katana", "Ароматизатори Troublemaker", "Ароматизатор Flavorlab", "Ароматизотор ElfLiQ", "Ароматизатори Vape Shot", "Ароматизатор 420", "Ароматизатор Elix", "Ароматизатор Nectar", "Ароматизатор Creepy", "Ароматизатор Sqwiz", "Ароматизатор Chaser", "Ароматизатори Flip"],
     "Одноразові Pod-системи": ["Одноразові Pod-системи"],
-    "Чайна Суміш": ["Чайна суміш", "Чайна суміш Zodiac", "Чайна суміш Molfar", "Чайна суміш Heven", "Чайна суміш Atom", "Чайна суміш Daim", "Чайна суміш 4:20", "Чайна суміш Cult", "Чайна суміш Yummy", "Чайна суміш Creepy", "Чайна суміш Unity", "Чайна суміш Pixtea", "Чайна Суміш Jibiar"],
+    "Чайна Суміш": ["Чайна суміш", "Чайна суміш Zodiac", "Чайна суміш Molfar", "Чайна суміш Heven", "Чайна суміш Atom", "Чайна суміш Daim", "Чайна суміш 4:20", "Чайна суміш 420", "Чайна суміш Cult", "Чайна суміш Yummy", "Чайна суміш Creepy", "Чайна суміш Unity", "Чайна суміш Pixtea", "Чайна Суміш Jibiar"],
     "Запальнички": ["Запальнички"],
     "CBD товари": ["CBD Candy", "CBD Bears", "Мікродозінг", "Напої CBD", "CBD - KreaTea", "Гумка CBD", "CBD товари"],
     "Кальяни та комплектуючі": ["Вугілля", "Totem Hookah", "Кальяни", "Аксесуари", "Колби", "Кальяни та комплектуючі"],
-    "Комплектуючі": ["Картриджі Lost Vape", "Випарники Lost Vape", "Випарники Smok", "Випарники Vaporesso", "Випарники Voopoo", "Випарники ZQ", "Картриджі Elf Bar", "Картриджі Eleaf", "Картриджі Geek Vape", "Картриджі Oxva", "Картриджі Smok", "Картриджі Suorin", "Картриджі Vaporesso", "Картриджі Upends", "Катриджі Voopoo", "Картриджі ZQ", "Випарники Nevoks", "Картриджі Nevoks", "Картриджі OVNS", "Випарник Joyetech", "Випаровувач", "Комплектуючі", "Акумулятори", "Аккумулятор", "Картриджі RXELF"],
+    "Комплектуючі": ["Картриджі Lost Vape", "Картриджи LostVape", "Випарники Lost Vape", "Випарники Smok", "Випарники Vaporesso", "Випарники Voopoo", "Випарники ZQ", "Картриджі Elf Bar", "Картриджі Eleaf", "Картриджі Geek Vape", "Картриджі Oxva", "Картриджі Smok", "Картриджі Suorin", "Картриджі Vaporesso", "Картриджі Upends", "Катриджі Voopoo", "Картриджі ZQ", "Випарники Nevoks", "Картриджі Nevoks", "Картриджі OVNS", "Випарник Joyetech", "Випаровувач", "Комплектуючі", "Акумулятори", "Аккумулятор", "Картриджі RXELF"],
     "Акцизна група": ["Тютюн для кальяну", "Табачні стіки", "Акцизна група товарів"],
     "Бонг Та Комплектуючі": ["Гріндер", "Фільтр Для Самокруток", "Папір Для Фільтрів", "Блант", "Бонг", "Джоінти", "Додаткова Комплектація", "Ковпак Для Пляшки", "Папір Для Самокруток", "Трубка", "Бонг Та Комплектуючі"],
     "Мерч": ["Мерч"],
@@ -340,7 +340,6 @@ document.getElementById('excel-btn').onclick = async function() {
             for(let i=16; i<=22; i++) {
                 let cl = nr.getCell(i); cl.numFmt = '0.00%';
                 
-                // ВИПРАВЛЕНО: formulae замість formula
                 ws.addConditionalFormatting({
                     ref: cl.address,
                     rules: [
